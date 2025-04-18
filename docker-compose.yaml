@@ -1,0 +1,16 @@
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    user: '1000'
+    environment:
+      - GF_INSTALL_PLUGINS=frser-sqlite-datasource
+      - GF_SMTP_ENABLED=${GF_SMTP_ENABLED}
+      - GF_SMTP_HOST=${GF_SMTP_HOST}
+      - GF_SMTP_USER=${GF_SMTP_USER}
+      - GF_SMTP_PASSWORD=${GF_SMTP_PASSWORD}
+    ports:
+      - '3000:3000'
+    volumes:
+      - '$PWD/docker/grafana/data:/var/lib/grafana'
