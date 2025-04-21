@@ -1,11 +1,66 @@
 services:
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+      target: fetch
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - ./app:/opt/mystrom-collector
+      - ./data/app:/data/app
+    depends_on:
+      - collector
+      - grafana
+
+  composer:
+    container_name: composer
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+      target: base
+    user: '${UID:-1000}:${GID:-1000}'
+    volumes:
+      - ./app:/opt/mystrom-collector
+    entrypoint: [ 'composer' ]
+    depends_on:
+      - collector
+
+  collector:
+    container_name: collector
+    image: collector:latest
+    user: '${UID:-1000}:${GID:-1000}'
+    build:
+      context: .
+      dockerfile: docker/collector/Dockerfile
+
+  sqliteweb:
+    container_name: sqliteweb
+    build:
+      context: .
+      dockerfile: docker/sqliteweb/Dockerfile
     restart: unless-stopped
-    user: '1000'
+    user: '${UID:-1000}:${GID:-1000}'
+    volumes:
+      - ./data/app:/data/app
+    command: solarstats.db
+    ports:
+      - '3001:8080'
+    depends_on:
+      - app
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: unless-stopped
+    user: '${UID:-1000}:${GID:-1000}'
     environment:
       - GF_INSTALL_PLUGINS=frser-sqlite-datasource
+      - GF_USERS_ALLOW_SIGN_UP=${GF_USERS_ALLOW_SIGN_UP}
+      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
       - GF_SMTP_ENABLED=${GF_SMTP_ENABLED}
       - GF_SMTP_HOST=${GF_SMTP_HOST}
       - GF_SMTP_USER=${GF_SMTP_USER}
@@ -13,4 +68,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - '$PWD/docker/grafana/data:/var/lib/grafana'
+      - ./data/grafana/lib:/var/lib/grafana
+      - ./data/grafana/provisioning:/etc/grafana/provisioning
+      - ./data/grafana/dashboards:/etc/grafana/dashboards
+      - ./data/app:/data/app

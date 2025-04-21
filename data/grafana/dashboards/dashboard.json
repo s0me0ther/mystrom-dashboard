@@ -1,0 +1,1009 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "default": true,
+        "type": "frser-sqlite-datasource",
+        "uid": "de081dm9yio00f"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisWidth": 75,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "hide": false,
+          "queryText": "SELECT\n    sd.ws as Watt,\n    sd.created as ts\nFROM switch_data as sd INNER JOIN\n    switch as s ON\n        sd.switch_id = s.id\nWHERE s.name = 'Balkon Solar' AND\n    sd.created BETWEEN 1743733865 AND 1743820265",
+          "queryType": "time series",
+          "rawQueryText": "SELECT\n    sd.ws as Watt,\n    sd.created as ts\nFROM switch_data as sd INNER JOIN\n    switch as s ON\n        sd.switch_id = s.id\nWHERE s.name = '$MyStromSwitch' AND\n    sd.created BETWEEN ${__from:date:seconds} AND ${__to:date:seconds}",
+          "refId": "Power",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Selection Watt",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "switch_id",
+            "mode": "inner"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "frser-sqlite-datasource",
+        "uid": "de081dm9yio00f"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisWidth": 75,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 43,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 0,
+            "pointSize": 2,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Temperature"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 10,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "hide": false,
+          "queryText": "SELECT\n    sd.temperature as Temperature,\n    sd.created as ts\nFROM switch_data as sd INNER JOIN\n    switch as s ON\n        sd.switch_id = s.id\nWHERE s.name = 'Balkon Solar' AND\n    sd.created BETWEEN 1743733865 AND 1743820265",
+          "queryType": "time series",
+          "rawQueryText": "SELECT\n    sd.temperature as Temperature,\n    sd.created as ts\nFROM switch_data as sd INNER JOIN\n    switch as s ON\n        sd.switch_id = s.id\nWHERE s.name = '$MyStromSwitch' AND\n    sd.created BETWEEN ${__from:date:seconds} AND ${__to:date:seconds}",
+          "refId": "A",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Selection Temperature",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "switch_id",
+            "mode": "inner"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "frser-sqlite-datasource",
+        "uid": "de081dm9yio00f"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "queryText": "WITH current_power AS (\n    SELECT\n        sd.ws,\n        MAX(sd.created)\n    FROM switch_data AS sd INNER JOIN\n         switch AS s ON\n             sd.switch_id = s.id\n    WHERE s.name = 'Balkon Solar' AND\n        s.is_input = 1 AND\n        sd.created BETWEEN 1743734310 AND 1743820710\n    GROUP BY s.id\n    ORDER BY sd.created DESC\n)\nSELECT\n    COALESCE(SUM(cp.ws), 0) as Power\nFROM current_power AS cp",
+          "queryType": "table",
+          "rawQueryText": "WITH current_power AS (\n    SELECT\n        sd.ws,\n        MAX(sd.created)\n    FROM switch_data AS sd INNER JOIN\n         switch AS s ON\n             sd.switch_id = s.id\n    WHERE s.name = '$MyStromSwitch' AND\n        s.is_input = 1 AND\n        sd.created BETWEEN ${__from:date:seconds} AND ${__to:date:seconds}\n    GROUP BY s.id\n    ORDER BY sd.created DESC\n)\nSELECT\n    COALESCE(SUM(cp.ws), 0) as Power\nFROM current_power AS cp",
+          "refId": "Production",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Current Selection Production",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "frser-sqlite-datasource",
+        "uid": "de081dm9yio00f"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 4
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "queryText": "WITH current_power AS (\n    SELECT\n        sd.ws,\n        MAX(sd.created)\n    FROM switch_data AS sd INNER JOIN\n         switch AS s ON\n             sd.switch_id = s.id\n    WHERE s.name = 'Balkon Solar' AND\n        s.is_input = 0 AND\n        sd.created BETWEEN 1744867639 AND 1744954039\n    GROUP BY s.id\n    ORDER BY sd.created DESC\n)\nSELECT\n    COALESCE(SUM(cp.ws), 0) as Power\nFROM current_power AS cp",
+          "queryType": "table",
+          "rawQueryText": "WITH current_power AS (\n    SELECT\n        sd.ws,\n        MAX(sd.created)\n    FROM switch_data AS sd INNER JOIN\n         switch AS s ON\n             sd.switch_id = s.id\n    WHERE s.name = '$MyStromSwitch' AND\n        s.is_input = 0 AND\n        sd.created BETWEEN ${__from:date:seconds} AND ${__to:date:seconds}\n    GROUP BY s.id\n    ORDER BY sd.created DESC\n)\nSELECT\n    COALESCE(SUM(cp.ws), 0) as Power\nFROM current_power AS cp",
+          "refId": "Consumtion",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Current Selection Consumption",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "frser-sqlite-datasource",
+        "uid": "de081dm9yio00f"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": -1,
+            "barWidthFactor": 0.5,
+            "drawStyle": "line",
+            "fillOpacity": 50,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 0,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Consume"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Production"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "queryText": "SELECT\n    sd.ws as Production,\n    sd.created as ts\nFROM switch_data as sd INNER JOIN\n    switch as s ON\n        sd.switch_id = s.id\nWHERE s.is_input = 1 AND\n    sd.created BETWEEN 1743733865 AND 1743820265",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n    sd.ws as Production,\n    sd.created as ts\nFROM switch_data as sd INNER JOIN\n    switch as s ON\n        sd.switch_id = s.id\nWHERE s.is_input = 1 AND\n    sd.created BETWEEN ${__from:date:seconds} AND ${__to:date:seconds}",
+          "refId": "Production",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        },
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "hide": false,
+          "queryText": "SELECT\n    SUM(sd.ws) as Consume,\n    sd.created as ts\nFROM switch_data as sd INNER JOIN\n    switch as s ON\n        sd.switch_id = s.id\nWHERE s.is_input = 0 AND\n    sd.created BETWEEN 1743733865 AND 1743820265\nGROUP BY sd.created",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n    SUM(sd.ws) as Consume,\n    sd.created as ts\nFROM switch_data as sd INNER JOIN\n    switch as s ON\n        sd.switch_id = s.id\nWHERE s.is_input = 0 AND\n    sd.created BETWEEN ${__from:date:seconds} AND ${__to:date:seconds}\nGROUP BY sd.created",
+          "refId": "Consume",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "All Consume / Production",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "frser-sqlite-datasource",
+        "uid": "de081dm9yio00f"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 800,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 5
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "queryText": "WITH current_power AS (\n    SELECT\n        sd.ws,\n        MAX(sd.created)\n    FROM switch_data AS sd INNER JOIN\n         switch AS s ON\n             sd.switch_id = s.id\n    WHERE s.is_input = 1 AND\n        sd.created >= UNIXEPOCH() - 3600\n    GROUP BY s.id\n    ORDER BY sd.created DESC\n)\nSELECT\n    SUM(cp.ws) as Power\nFROM current_power AS cp",
+          "queryType": "table",
+          "rawQueryText": "WITH current_power AS (\n    SELECT\n        sd.ws,\n        MAX(sd.created)\n    FROM switch_data AS sd INNER JOIN\n         switch AS s ON\n             sd.switch_id = s.id\n    WHERE s.is_input = 1 AND\n        sd.created >= UNIXEPOCH() - 3600\n    GROUP BY s.id\n    ORDER BY sd.created DESC\n)\nSELECT\n    SUM(cp.ws) as Power\nFROM current_power AS cp",
+          "refId": "Production",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Current ∑ Production",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "frser-sqlite-datasource",
+        "uid": "de081dm9yio00f"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "max": 0,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 600
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 8
+      },
+      "id": 9,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "queryText": "WITH current_power AS (\n    SELECT\n        sd.ws,\n        MAX(sd.created)\n    FROM switch_data AS sd INNER JOIN\n         switch AS s ON\n             sd.switch_id = s.id\n    WHERE s.is_input = 0 AND\n        sd.created >= UNIXEPOCH() - 3600\n    GROUP BY s.id\n    ORDER BY sd.created DESC\n)\nSELECT\n    SUM(cp.ws) as Power\nFROM current_power AS cp",
+          "queryType": "table",
+          "rawQueryText": "WITH current_power AS (\n    SELECT\n        sd.ws,\n        MAX(sd.created)\n    FROM switch_data AS sd INNER JOIN\n         switch AS s ON\n             sd.switch_id = s.id\n    WHERE s.is_input = 0 AND\n        sd.created >= UNIXEPOCH() - 3600\n    GROUP BY s.id\n    ORDER BY sd.created DESC\n)\nSELECT\n    SUM(cp.ws) as Power\nFROM current_power AS cp",
+          "refId": "Consumtion",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Current ∑ Consumption",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "uid": "de081dm9yio00f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeAsIso"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 8
+      },
+      "id": 10,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": false
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "queryText": "SELECT\n    strftime('%Y-%m-%d %H:%M:%S', sd.created, 'unixepoch')\nFROM switch_data AS sd INNER JOIN\n      switch AS s ON\n        sd.switch_id = s.id\nWHERE s.is_input = 1 AND\n    sd.ws > 0\nORDER BY sd.created DESC\nLIMIT 1",
+          "queryType": "table",
+          "rawQueryText": "SELECT\n    strftime('%Y-%m-%d %H:%M:%S', sd.created, 'unixepoch')\nFROM switch_data AS sd INNER JOIN\n      switch AS s ON\n        sd.switch_id = s.id\nWHERE s.is_input = 1 AND\n    sd.ws > 0\nORDER BY sd.created DESC\nLIMIT 1",
+          "refId": "A",
+          "timeColumns": []
+        }
+      ],
+      "title": "Latest production time",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "frser-sqlite-datasource",
+        "uid": "de081dm9yio00f"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 12
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "queryText": "WITH power_usage AS (\n    SELECT\n        sd.ws,\n        sd.created,\n        LEAD(sd.created) OVER (PARTITION by sd.switch_id ORDER BY sd.created) as next_created\n    FROM switch_data AS sd INNER JOIN\n        switch AS s ON\n            sd.switch_id = s.id\n    WHERE s.is_input = 1 AND\n        created BETWEEN 1743733865 AND 1743820265\n)\nSELECT\n    SUM(ws * (next_created - created) / 3600) AS total_wh\nFROM\n    power_usage\nWHERE\n    next_created IS NOT NULL\n    ",
+          "queryType": "table",
+          "rawQueryText": "WITH power_usage AS (\n    SELECT\n        sd.ws,\n        sd.created,\n        LEAD(sd.created) OVER (PARTITION by sd.switch_id ORDER BY sd.created) as next_created\n    FROM switch_data AS sd INNER JOIN\n        switch AS s ON\n            sd.switch_id = s.id\n    WHERE s.is_input = 1 AND\n        created BETWEEN ${__from:date:seconds} AND ${__to:date:seconds}\n)\nSELECT\n    SUM(ws * (next_created - created) / 3600) AS total_wh\nFROM\n    power_usage\nWHERE\n    next_created IS NOT NULL\n    ",
+          "refId": "Consumtion",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Timerange ∑ Production",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": true,
+        "type": "frser-sqlite-datasource",
+        "uid": "de081dm9yio00f"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": null
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 12
+      },
+      "id": 7,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "frser-sqlite-datasource",
+            "uid": "de081dm9yio00f"
+          },
+          "queryText": "WITH power_usage AS (\n    SELECT\n        sd.ws,\n        sd.created,\n        LEAD(sd.created) OVER (PARTITION by sd.switch_id ORDER BY sd.created) as next_created\n    FROM switch_data AS sd INNER JOIN\n        switch AS s ON\n            sd.switch_id = s.id\n    WHERE s.is_input = 0 AND\n        created BETWEEN 1744867639 AND 1744954039\n)\nSELECT\n    SUM(ws * (next_created - created) / 3600) AS total_wh\nFROM\n    power_usage\nWHERE\n    next_created IS NOT NULL\n    ",
+          "queryType": "table",
+          "rawQueryText": "WITH power_usage AS (\n    SELECT\n        sd.ws,\n        sd.created,\n        LEAD(sd.created) OVER (PARTITION by sd.switch_id ORDER BY sd.created) as next_created\n    FROM switch_data AS sd INNER JOIN\n        switch AS s ON\n            sd.switch_id = s.id\n    WHERE s.is_input = 0 AND\n        created BETWEEN ${__from:date:seconds} AND ${__to:date:seconds}\n)\nSELECT\n    SUM(ws * (next_created - created) / 3600) AS total_wh\nFROM\n    power_usage\nWHERE\n    next_created IS NOT NULL\n    ",
+          "refId": "Consumtion",
+          "timeColumns": [
+            "time",
+            "ts"
+          ]
+        }
+      ],
+      "title": "Timerange ∑ Consumption",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "uid": "de081dm9yio00f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 12
+      },
+      "id": 11,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": false
+      },
+      "pluginVersion": "11.5.1",
+      "targets": [
+        {
+          "queryText": "WITH diff AS (\n    SELECT \n        unixepoch() - sd.created AS seconds_diff\n    FROM switch_data AS sd INNER JOIN\n      switch AS s ON\n        sd.switch_id = s.id\n    WHERE s.is_input = 1 AND\n        sd.ws > 0\n    ORDER BY sd.created DESC\n    LIMIT 1\n)\nSELECT\n    (seconds_diff / 86400) || ' days, ' ||\n    ((seconds_diff % 86400) / 3600) || ' hours, ' ||\n    ((seconds_diff % 3600) / 60) || ' minutes' AS time_diff\nFROM diff;",
+          "queryType": "table",
+          "rawQueryText": "WITH diff AS (\n    SELECT \n        unixepoch() - sd.created AS seconds_diff\n    FROM switch_data AS sd INNER JOIN\n      switch AS s ON\n        sd.switch_id = s.id\n    WHERE s.is_input = 1 AND\n        sd.ws > 0\n    ORDER BY sd.created DESC\n    LIMIT 1\n)\nSELECT\n    (seconds_diff / 86400) || ' days, ' ||\n    ((seconds_diff % 86400) / 3600) || ' hours, ' ||\n    ((seconds_diff % 3600) / 60) || ' minutes' AS time_diff\nFROM diff;",
+          "refId": "A",
+          "timeColumns": []
+        }
+      ],
+      "title": "No production since",
+      "type": "table"
+    }
+  ],
+  "preload": false,
+  "refresh": "1m",
+  "schemaVersion": 40,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "Balkon Solar",
+          "value": "Balkon Solar"
+        },
+        "datasource": {
+          "type": "frser-sqlite-datasource",
+          "uid": "de081dm9yio00f"
+        },
+        "definition": "SELECT name\nFROM switch\nORDER BY sort",
+        "includeAll": false,
+        "name": "MyStromSwitch",
+        "options": [],
+        "query": "SELECT name\nFROM switch\nORDER BY sort",
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Strom",
+  "uid": "be08f65z4libke",
+  "version": 43,
+  "weekStart": ""
+}
